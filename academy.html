@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Academy – Professional academic writing support for essays, research papers, dissertations, thesis, editing and proofreading.">
+<meta name="keywords" content="academic writing, essay writing, research papers, dissertation support, thesis writing, editing, proofreading">
+<title>Academy – Professional Academic Writing Support</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root {
+  --bg:           #0a0a0f;
+  --bg2:          #111118;
+  --surface:      #16161f;
+  --surface2:     #1e1e2a;
+  --border:       rgba(255,255,255,0.07);
+  --border-hover: rgba(255,255,255,0.15);
+  --gold:         #c9a84c;
+  --gold-light:   #e8c97a;
+  --gold-dim:     rgba(201,168,76,0.15);
+  --text:         #f0ede6;
+  --text-muted:   #8b8a94;
+  --text-dim:     #5a5968;
+  --white:        #ffffff;
+  --radius-sm:    8px;
+  --radius-md:    16px;
+  --radius-lg:    24px;
+  --radius-xl:    36px;
+  --shadow:       0 4px 24px rgba(0,0,0,0.4);
+  --shadow-lg:    0 12px 48px rgba(0,0,0,0.6);
+  --glow:         0 0 40px rgba(201,168,76,0.12);
+  --transition:   0.3s cubic-bezier(0.4,0,0.2,1);
+  --font-display: 'Playfair Display', serif;
+  --font-body:    'Inter', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+  --nav-h:        72px;
+}
+[data-theme="light"] {
+  --bg:           #f8f6f1;
+  --bg2:          #ede9e0;
+  --surface:      #ffffff;
+  --surface2:     #f3f0e9;
+  --border:       rgba(0,0,0,0.08);
+  --border-hover: rgba(0,0,0,0.18);
+  --gold:         #a8832a;
+  --gold-light:   #c9a84c;
+  --gold-dim:     rgba(168,131,42,0.1);
+  --text:         #1a1810;
+  --text-muted:   #5c5a52;
+  --text-dim:     #9b9890;
+  --shadow:       0 4px 24px rgba(0,0,0,0.08);
+  --shadow-lg:    0 12px 48px rgba(0,0,0,0.14);
+  --glow:         0 0 40px rgba(168,131,42,0.08);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background var(--transition), color var(--transition);
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+ul { list-style: none; }
+::selection { background: var(--gold-dim); color: var(--gold-light); }
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.display { font-family: var(--font-display); }
+h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 700; line-height: 1.15; }
+h1 { font-size: clamp(2.4rem, 6vw, 4.5rem); }
+h2 { font-size: clamp(1.8rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
+p { color: var(--text-muted); }
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+section { padding: 100px 0; position: relative; overflow: hidden; }
+
+/* ============================================================
+   GRAIN OVERLAY
+   ============================================================ */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: 0.35;
+}
+
+/* ============================================================
+   GRADIENT ORBS
+   ============================================================ */
+.orb {
+  position: absolute; border-radius: 50%; filter: blur(80px);
+  pointer-events: none; z-index: 0;
+}
+.orb-gold  { background: radial-gradient(circle, rgba(201,168,76,0.18), transparent 70%); }
+.orb-blue  { background: radial-gradient(circle, rgba(80,100,200,0.12), transparent 70%); }
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: var(--nav-h);
+  display: flex; align-items: center;
+  transition: all var(--transition);
+  padding: 0 24px;
+}
+#navbar.scrolled {
+  background: rgba(10,10,15,0.78);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+[data-theme="light"] #navbar.scrolled {
+  background: rgba(248,246,241,0.82);
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 36px;
+}
+.nav-links a {
+  font-size: 0.875rem; font-weight: 500; color: var(--text-muted);
+  letter-spacing: 0.03em; transition: color var(--transition);
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+  height: 1px; background: var(--gold); transform: scaleX(0); transition: transform var(--transition);
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-right { display: flex; align-items: center; gap: 16px; }
+
+/* Theme Toggle */
+.theme-toggle {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); font-size: 1rem; transition: all var(--transition);
+  background: var(--surface);
+}
+.theme-toggle:hover { border-color: var(--gold); color: var(--gold); }
+
+/* Hamburger */
+.hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
+.hamburger span {
+  display: block; width: 22px; height: 2px; background: var(--text);
+  border-radius: 2px; transition: all var(--transition);
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile nav */
+.mobile-nav {
+  position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0;
+  background: var(--bg); z-index: 999; padding: 40px 24px;
+  transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  display: flex; flex-direction: column; gap: 24px;
+}
+.mobile-nav.open { transform: translateX(0); }
+.mobile-nav a {
+  font-size: 1.5rem; font-weight: 600; font-family: var(--font-display);
+  color: var(--text-muted); padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  transition: color var(--transition);
+}
+.mobile-nav a:hover { color: var(--gold); }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: 50px; font-weight: 600;
+  font-size: 0.9rem; letter-spacing: 0.02em;
+  transition: all var(--transition); white-space: nowrap;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  color: #0a0a0f; box-shadow: 0 4px 20px rgba(201,168,76,0.35);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(201,168,76,0.5);
+}
+.btn-wa {
+  background: #25D366; color: #fff;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.3);
+}
+.btn-wa:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(37,211,102,0.45); }
+.btn-outline {
+  background: transparent; border: 1px solid var(--border-hover);
+  color: var(--text);
+}
+.btn-outline:hover {
+  border-color: var(--gold); color: var(--gold);
+  transform: translateY(-2px);
+}
+.btn-ghost {
+  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.2);
+  color: var(--gold-light);
+}
+.btn-ghost:hover { background: rgba(201,168,76,0.22); transform: translateY(-2px); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+#hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding-top: var(--nav-h); overflow: hidden;
+  background: var(--bg);
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  align-items: center; padding: 60px 0;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 50px; padding: 6px 16px;
+  font-size: 0.78rem; font-weight: 600; color: var(--gold-light);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.hero-eyebrow span { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+.hero-title { margin-bottom: 24px; color: var(--text); }
+.hero-title em { font-style: normal; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: 1.1rem; line-height: 1.7; margin-bottom: 40px; max-width: 520px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 48px; }
+.hero-badges { display: flex; flex-wrap: wrap; gap: 12px; }
+.badge {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 50px;
+  background: var(--surface); border: 1px solid var(--border);
+  font-size: 0.78rem; color: var(--text-muted); font-weight: 500;
+  transition: all var(--transition);
+}
+.badge:hover { border-color: var(--gold); color: var(--gold-light); }
+.badge svg { color: var(--gold); flex-shrink: 0; }
+
+/* Hero visual */
+.hero-visual { position: relative; height: 520px; display: flex; align-items: center; justify-content: center; }
+.hero-center-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px; width: 280px;
+  box-shadow: var(--shadow-lg), var(--glow);
+  text-align: center; z-index: 2;
+}
+.hero-center-card .hc-icon {
+  width: 64px; height: 64px; border-radius: var(--radius-md);
+  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; margin: 0 auto 16px; color: var(--gold);
+}
+.hero-center-card h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 6px; }
+.hero-center-card p { font-size: 0.82rem; }
+.hero-rating { display: flex; justify-content: center; align-items: center; gap: 4px; margin-top: 12px; }
+.star { color: var(--gold); font-size: 0.85rem; }
+
+/* Floating cards */
+.float-card {
+  position: absolute; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: var(--radius-md);
+  padding: 14px 18px; font-size: 0.78rem; font-weight: 600;
+  color: var(--text); box-shadow: var(--shadow);
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap; z-index: 3;
+}
+.float-card .fc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink:0; }
+.fc-1 { top: 30px; left: -10px; animation: float1 4s ease-in-out infinite; }
+.fc-2 { top: 90px; right: -20px; animation: float2 4.5s ease-in-out infinite; }
+.fc-3 { bottom: 100px; left: -20px; animation: float1 5s ease-in-out infinite 1s; }
+.fc-4 { bottom: 40px; right: -10px; animation: float2 3.8s ease-in-out infinite 0.5s; }
+@keyframes float1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+@keyframes float2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
+
+/* Orbs in hero */
+.hero-orb1 { width: 500px; height: 500px; top: -100px; right: -100px; }
+.hero-orb2 { width: 300px; height: 300px; bottom: 0; left: -60px; }
+
+/* ============================================================
+   SECTION HEADERS
+   ============================================================ */
+.section-header { text-align: center; margin-bottom: 64px; }
+.section-tag {
+  display: inline-block; background: var(--gold-dim);
+  border: 1px solid rgba(201,168,76,0.2);
+  color: var(--gold-light); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 50px; margin-bottom: 16px;
+}
+.section-header h2 { margin-bottom: 16px; }
+.section-header p { max-width: 580px; margin: 0 auto; font-size: 1.05rem; }
+.gold-text { background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+#about { background: var(--bg2); }
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 72px;
+  align-items: center;
+}
+.about-image-wrap {
+  position: relative; border-radius: var(--radius-xl);
+  overflow: hidden; aspect-ratio: 4/5;
+}
+.about-image-bg {
+  width: 100%; height: 100%;
+  background: linear-gradient(145deg, var(--surface2) 0%, var(--surface) 50%, var(--gold-dim) 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.about-image-inner {
+  width: 80%; height: 80%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px;
+}
+.about-icon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
+.about-icon-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 20px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8px; text-align: center; transition: all var(--transition);
+}
+.about-icon-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+.about-icon-card .icon { font-size: 2rem; margin-bottom: 4px; }
+.about-icon-card span { font-size: 0.72rem; font-weight: 600; color: var(--text-muted); }
+.about-floater {
+  position: absolute; bottom: 20px; right: 20px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 14px 20px;
+  font-size: 0.8rem; font-weight: 600; color: var(--text);
+  box-shadow: var(--shadow); display: flex; align-items: center; gap: 8px;
+}
+.about-floater .dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
+.about-content { display: flex; flex-direction: column; gap: 24px; }
+.about-lead { font-size: 1.15rem; color: var(--text); line-height: 1.65; }
+.about-list { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+.about-item { display: flex; align-items: flex-start; gap: 14px; }
+.about-item-icon {
+  width: 36px; height: 36px; border-radius: var(--radius-sm);
+  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 1rem;
+}
+.about-item-text strong { display: block; font-size: 0.9rem; color: var(--text); margin-bottom: 2px; }
+.about-item-text p { font-size: 0.82rem; margin: 0; }
+
+/* ============================================================
+   SERVICES
+   ============================================================ */
+#services { background: var(--bg); }
+.services-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.service-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 36px 28px;
+  transition: all var(--transition);
+  position: relative; overflow: hidden;
+  cursor: default;
+}
+.service-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--gold-dim), transparent);
+  opacity: 0; transition: opacity var(--transition);
+  border-radius: inherit;
+}
+.service-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-6px); box-shadow: var(--shadow-lg), var(--glow); }
+.service-card:hover::before { opacity: 1; }
+.service-icon {
+  width: 56px; height: 56px; border-radius: var(--radius-md);
+  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; margin-bottom: 20px;
+  transition: transform var(--transition);
+  position: relative; z-index: 1;
+}
+.service-card:hover .service-icon { transform: scale(1.08); }
+.service-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--text); position: relative; z-index: 1; }
+.service-card p { font-size: 0.84rem; line-height: 1.65; position: relative; z-index: 1; }
+.service-number {
+  position: absolute; top: 24px; right: 24px;
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-dim); letter-spacing: 0.05em;
+}
+
+/* ============================================================
+   PORTFOLIO
+   ============================================================ */
+#portfolio { background: var(--bg2); }
+.portfolio-filter {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  justify-content: center; margin-bottom: 48px;
+}
+.filter-btn {
+  padding: 8px 20px; border-radius: 50px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); font-size: 0.82rem; font-weight: 500;
+  cursor: pointer; transition: all var(--transition); font-family: inherit;
+}
+.filter-btn.active, .filter-btn:hover {
+  background: var(--gold-dim); border-color: rgba(201,168,76,0.3);
+  color: var(--gold-light);
+}
+.portfolio-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.portfolio-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); overflow: hidden;
+  transition: all var(--transition);
+}
+.portfolio-card:hover { transform: translateY(-6px); border-color: rgba(201,168,76,0.25); box-shadow: var(--shadow-lg); }
+.portfolio-thumb {
+  height: 180px; display: flex; align-items: center; justify-content: center;
+  font-size: 3rem; position: relative; overflow: hidden;
+}
+.portfolio-thumb::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.4));
+}
+.portfolio-body { padding: 20px 22px; }
+.portfolio-tag {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--gold-light); margin-bottom: 8px;
+  font-family: var(--font-mono);
+}
+.portfolio-body h3 { font-size: 1rem; color: var(--text); margin-bottom: 8px; }
+.portfolio-body p { font-size: 0.8rem; }
+.portfolio-meta {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);
+}
+.pm-item { font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono); }
+
+/* Thumb gradients */
+.t1 { background: linear-gradient(135deg,#1a1035,#2d1f5e); }
+.t2 { background: linear-gradient(135deg,#0f2027,#203a43); }
+.t3 { background: linear-gradient(135deg,#1c1c1c,#3d2b1f); }
+.t4 { background: linear-gradient(135deg,#12172b,#1e3a5f); }
+.t5 { background: linear-gradient(135deg,#1f2937,#111827); }
+.t6 { background: linear-gradient(135deg,#1a2e1a,#0f1f0f); }
+
+/* ============================================================
+   WHY CHOOSE US
+   ============================================================ */
+#why { background: var(--bg); }
+.why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.why-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 32px 26px;
+  transition: all var(--transition);
+}
+.why-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.why-icon { font-size: 2rem; margin-bottom: 18px; }
+.why-card h3 { font-size: 1rem; color: var(--text); margin-bottom: 10px; }
+.why-card p { font-size: 0.83rem; }
+
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+#testimonials { background: var(--bg2); overflow: hidden; }
+.testimonials-wrapper { position: relative; }
+.testimonials-track-outer { overflow: hidden; }
+.testimonials-track {
+  display: flex; gap: 24px; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.testimonial-card {
+  flex: 0 0 calc(33.333% - 16px); background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 32px; transition: border-color var(--transition);
+}
+.testimonial-card.active { border-color: rgba(201,168,76,0.3); }
+.t-stars { display: flex; gap: 3px; margin-bottom: 20px; }
+.t-stars .star { font-size: 1rem; }
+.t-text { font-size: 0.9rem; color: var(--text); line-height: 1.7; font-style: italic; margin-bottom: 24px; }
+.t-author { display: flex; align-items: center; gap: 14px; }
+.t-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; border: 2px solid var(--gold-dim); flex-shrink: 0;
+}
+.t-name { font-weight: 600; font-size: 0.88rem; color: var(--text); }
+.t-country { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
+.slider-controls { display: flex; align-items: center; gap: 12px; justify-content: center; margin-top: 40px; }
+.slider-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--surface); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); font-size: 1rem; transition: all var(--transition);
+  cursor: pointer; font-family: inherit;
+}
+.slider-btn:hover { border-color: var(--gold); color: var(--gold); }
+.slider-dots { display: flex; gap: 8px; }
+.slider-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border); cursor: pointer;
+  transition: all var(--transition);
+}
+.slider-dot.active { background: var(--gold); width: 24px; border-radius: 4px; }
+
+/* ============================================================
+   STATISTICS
+   ============================================================ */
+#stats { background: var(--bg); }
+.stats-inner {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl); padding: 64px;
+  position: relative; overflow: hidden;
+}
+.stats-inner::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at top, var(--gold-dim) 0%, transparent 60%);
+}
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 40px; position: relative; z-index: 1; }
+.stat-item { text-align: center; }
+.stat-number {
+  font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 700; color: var(--gold-light); line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
+.stat-divider {
+  width: 1px; background: var(--border); margin: 0 auto;
+  display: none;
+}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+#contact { background: var(--bg2); }
+.contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 700px; margin: 0 auto 60px; }
+.contact-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 28px 24px;
+  text-align: center; transition: all var(--transition); cursor: pointer;
+  display: block;
+}
+.contact-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.cc-icon {
+  width: 52px; height: 52px; border-radius: var(--radius-md);
+  margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+}
+.cc-wa { background: rgba(37,211,102,0.12); }
+.cc-em { background: rgba(99,102,241,0.12); }
+.cc-ig { background: rgba(233,62,130,0.12); }
+.cc-fb { background: rgba(24,119,242,0.12); }
+.contact-card h3 { font-size: 0.9rem; color: var(--text); margin-bottom: 4px; }
+.contact-card p { font-size: 0.78rem; }
+.contact-cta { text-align: center; }
+.contact-cta h2 { margin-bottom: 16px; }
+.contact-cta p { font-size: 1.05rem; margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
+.contact-cta .btn { font-size: 1rem; padding: 18px 40px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--bg); border-top: 1px solid var(--border);
+  padding: 80px 0 32px;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px; margin-bottom: 60px;
+}
+.footer-brand .nav-logo { display: inline-block; margin-bottom: 14px; }
+.footer-brand p { font-size: 0.84rem; max-width: 280px; margin-bottom: 20px; }
+.footer-social { display: flex; gap: 10px; }
+.social-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--surface); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; color: var(--text-muted); transition: all var(--transition);
+}
+.social-btn:hover { border-color: var(--gold); color: var(--gold); }
+.footer-col h4 { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); margin-bottom: 18px; font-family: var(--font-body); }
+.footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul li a { font-size: 0.84rem; color: var(--text-muted); transition: color var(--transition); }
+.footer-col ul li a:hover { color: var(--gold-light); }
+.footer-bottom {
+  border-top: 1px solid var(--border); padding-top: 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-bottom p { font-size: 0.78rem; }
+.footer-legal { display: flex; gap: 20px; }
+.footer-legal a { font-size: 0.78rem; color: var(--text-dim); transition: color var(--transition); }
+.footer-legal a:hover { color: var(--gold-light); }
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+.fade-up {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.fade-in { opacity: 0; transition: opacity 0.8s ease; }
+.fade-in.visible { opacity: 1; }
+
+/* Stagger children */
+.stagger > * { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay: 0s; }
+.stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay: 0.08s; }
+.stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay: 0.16s; }
+.stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay: 0.24s; }
+.stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay: 0.32s; }
+.stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay: 0.40s; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  .services-grid, .portfolio-grid, .why-grid { grid-template-columns: repeat(2,1fr); }
+  .stats-grid { grid-template-columns: repeat(2,2fr); gap: 32px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .testimonial-card { flex: 0 0 calc(50% - 12px); }
+}
+@media (max-width: 768px) {
+  section { padding: 72px 0; }
+  .nav-links, .nav-right .btn { display: none; }
+  .hamburger { display: flex; }
+  .hero-grid { grid-template-columns: 1fr; gap: 48px; text-align: center; }
+  .hero-visual { height: 320px; }
+  .hero-actions { justify-content: center; }
+  .hero-badges { justify-content: center; }
+  .hero-sub { margin: 0 auto 40px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-image-wrap { aspect-ratio: 3/2; }
+  .services-grid, .portfolio-grid, .why-grid { grid-template-columns: 1fr; }
+  .testimonial-card { flex: 0 0 calc(100% - 0px); }
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .stats-inner { padding: 40px 24px; }
+  .contact-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .fc-1, .fc-2, .fc-3, .fc-4 { display: none; }
+  .hero-center-card { width: 240px; }
+}
+@media (max-width: 480px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Academy</a>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+      <a href="https://wa.me/254748738808" target="_blank" rel="noopener" class="btn btn-wa" style="padding:10px 20px;font-size:0.82rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chat on WhatsApp
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#hero" class="mobile-link">Home</a>
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#services" class="mobile-link">Services</a>
+  <a href="#portfolio" class="mobile-link">Portfolio</a>
+  <a href="#testimonials" class="mobile-link">Reviews</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <a href="https://wa.me/254748738808" target="_blank" rel="noopener" class="btn btn-wa" style="margin-top:12px;justify-content:center;">Chat on WhatsApp</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="orb orb-gold hero-orb1"></div>
+  <div class="orb orb-blue hero-orb2"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-eyebrow fade-in">
+          <span></span>
+          Trusted Academic Writing Partner
+        </div>
+        <h1 class="hero-title fade-up">
+          Professional Academic Writing Support <em>You Can Trust</em>
+        </h1>
+        <p class="hero-sub fade-up">
+          We help students with essays, research papers, dissertations, thesis support, editing, proofreading, and academic projects — delivered with quality and confidentiality.
+        </p>
+        <div class="hero-actions fade-up">
+          <a href="#services" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Get Started
+          </a>
+          <a href="https://wa.me/254748738808" target="_blank" rel="noopener" class="btn btn-wa">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Chat on WhatsApp
+          </a>
+        </div>
+        <div class="hero-badges fade-in">
+          <div class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Professional Support</div>
+          <div class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Confidential Service</div>
+          <div class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Quality Assurance</div>
+          <div class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>On-Time Delivery</div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-center-card">
+          <div class="hc-icon">📝</div>
+          <h3>Academic Excellence</h3>
+          <p>Expert support, every project</p>
+          <div class="hero-rating">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+        </div>
+        <div class="float-card fc-1"><span class="fc-dot"></span>Essay Writing</div>
+        <div class="float-card fc-2"><span class="fc-dot"></span>Research Papers</div>
+        <div class="float-card fc-3"><span class="fc-dot"></span>Dissertation Support</div>
+        <div class="float-card fc-4"><span class="fc-dot"></span>Editing Services</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image-wrap fade-in">
+        <div class="about-image-bg">
+          <div class="about-image-inner">
+            <div class="about-icon-grid">
+              <div class="about-icon-card"><span class="icon">🎓</span><span>Academic<br>Excellence</span></div>
+              <div class="about-icon-card"><span class="icon">🔒</span><span>100%<br>Confidential</span></div>
+              <div class="about-icon-card"><span class="icon">⏱️</span><span>On-Time<br>Delivery</span></div>
+              <div class="about-icon-card"><span class="icon">✅</span><span>Quality<br>Assured</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="about-floater">
+          <span class="dot"></span>
+          Available 24/7 for Students
+        </div>
+      </div>
+      <div class="about-content fade-up">
+        <div class="section-tag">About Academy</div>
+        <h2>Where Academic <span class="gold-text">Challenges Meet Expert Solutions</span></h2>
+        <p class="about-lead">
+          Academy is a dedicated academic writing support service helping students navigate the demands of university life with confidence. We combine subject expertise with a genuine commitment to your academic success.
+        </p>
+        <div class="about-list">
+          <div class="about-item">
+            <div class="about-item-icon">📚</div>
+            <div class="about-item-text">
+              <strong>Comprehensive Writing Services</strong>
+              <p>From first-year essays to doctoral dissertations — we handle every level and discipline.</p>
+            </div>
+          </div>
+          <div class="about-item">
+            <div class="about-item-icon">🛡️</div>
+            <div class="about-item-text">
+              <strong>Complete Confidentiality</strong>
+              <p>Your privacy is paramount. All projects are handled with absolute discretion.</p>
+            </div>
+          </div>
+          <div class="about-item">
+            <div class="about-item-icon">🌟</div>
+            <div class="about-item-text">
+              <strong>Expert Team</strong>
+              <p>Our writers hold advanced degrees and bring real research experience to every assignment.</p>
+            </div>
+          </div>
+          <div class="about-item">
+            <div class="about-item-icon">⚡</div>
+            <div class="about-item-text">
+              <strong>Fast & Reliable</strong>
+              <p>Responsive communication and reliable delivery, even under tight deadlines.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Our Services</div>
+      <h2>Academic Support <span class="gold-text">Tailored to You</span></h2>
+      <p>A full spectrum of academic writing services, crafted to the highest standards across every subject area and level.</p>
+    </div>
+    <div class="services-grid stagger">
+      <div class="service-card">
+        <div class="service-number">01</div>
+        <div class="service-icon">✍️</div>
+        <h3>Essay Writing</h3>
+        <p>Compelling, well-researched essays for any topic or level — from undergraduate to postgraduate. Structured arguments, proper citations, original thought.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-number">02</div>
+        <div class="service-icon">🔬</div>
+        <h3>Research Papers</h3>
+        <p>In-depth academic research papers with rigorous methodology, comprehensive literature reviews, and sound analysis across all disciplines.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-number">03</div>
+        <div class="service-icon">📖</div>
+        <h3>Dissertation Support</h3>
+        <p>End-to-end dissertation support — from proposal development and research design to findings analysis and final write-up.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-number">04</div>
+        <div class="service-icon">🎓</div>
+        <h3>Thesis Writing</h3>
+        <p>Scholarly thesis writing that meets institutional standards, with meticulous attention to argumentation, evidence, and academic voice.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-number">05</div>
+        <div class="service-icon">🔍</div>
+        <h3>Editing & Proofreading</h3>
+        <p>Expert editing to sharpen your writing — grammar, structure, flow, and academic tone — leaving your work polished and submission-ready.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-number">06</div>
+        <div class="service-icon">📊</div>
+        <h3>Case Studies</h3>
+        <p>Thorough, analytical case studies that demonstrate deep understanding of context, apply relevant theory, and draw evidence-based conclusions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Portfolio</div>
+      <h2>Work That <span class="gold-text">Speaks for Itself</span></h2>
+      <p>A selection of the academic work categories our team has delivered — across disciplines, levels, and institutions.</p>
+    </div>
+    <div class="portfolio-filter fade-in">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="research">Research</button>
+      <button class="filter-btn" data-filter="essay">Essays</button>
+      <button class="filter-btn" data-filter="dissertation">Dissertations</button>
+      <button class="filter-btn" data-filter="editing">Editing</button>
+    </div>
+    <div class="portfolio-grid stagger">
+      <div class="portfolio-card" data-cat="research">
+        <div class="portfolio-thumb t1"><span style="position:relative;z-index:1">🔬</span></div>
+        <div class="portfolio-body">
+          <div class="portfolio-tag">Research Paper</div>
+          <h3>Climate Policy Impact Analysis</h3>
+          <p>A 45-page policy research paper examining renewable energy adoption across Sub-Saharan Africa.</p>
+          <div class="portfolio-meta">
+            <span class="pm-item">8,500 words</span>
+            <span class="pm-item">•</span>
+            <span class="pm-item">MSc level</span>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-card" data-cat="essay">
+        <div class="portfolio-thumb t2"><span style="position:relative;z-index:1">✍️</span></div>
+        <div class="portfolio-body">
+          <div class="portfolio-tag">Essay</div>
+          <h3>Postcolonial Identity in Contemporary Literature</h3>
+          <p>Critical analysis essay exploring themes of identity formation through three postcolonial novels.</p>
+          <div class="portfolio-meta">
+            <span class="pm-item">4,200 words</span>
+            <span class="pm-item">•</span>
+            <span class="pm-item">BA level</span>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-card" data-cat="dissertation">
+        <div class="portfolio-thumb t3"><span style="position:relative;z-index:1">📖</span></div>
+        <div class="portfolio-body">
+          <div class="portfolio-tag">Dissertation</div>
+          <h3>Digital Banking Adoption in Emerging Markets</h3>
+          <p>Full MBA dissertation with primary research, survey analysis, and strategic recommendations.</p>
+          <div class="portfolio-meta">
+            <span class="pm-item">18,000 words</span>
+            <span class="pm-item">•</span>
+            <span class="pm-item">MBA level</span>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-card" data-cat="editing">
+        <div class="portfolio-thumb t4"><span style="position:relative;z-index:1">🔍</span></div>
+        <div class="portfolio-body">
+          <div class="portfolio-tag">Editing Project</div>
+          <h3>PhD Thesis — Structural & Language Edit</h3>
+          <p>Comprehensive structural editing and language refinement for a 90,000-word doctoral thesis in Economics.</p>
+          <div class="portfolio-meta">
+            <span class="pm-item">90,000 words</span>
+            <span class="pm-item">•</span>
+            <span class="pm-item">PhD level</span>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-card" data-cat="research">
+        <div class="portfolio-thumb t5"><span style="position:relative;z-index:1">📊</span></div>
+        <div class="portfolio-body">
+          <div class="portfolio-tag">Case Study</div>
+          <h3>Supply Chain Resilience — FMCG Sector</h3>
+          <p>Business case study examining disruption strategies and operational pivots during global supply chain events.</p>
+          <div class="portfolio-meta">
+            <span class="pm-item">6,800 words</span>
+            <span class="pm-item">•</span>
+            <span class="pm-item">MSc level</span>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-card" data-cat="dissertation">
+        <div class="portfolio-thumb t6"><span style="position:relative;z-index:1">🎓</span></div>
+        <div class="portfolio-body">
+          <div class="portfolio-tag">Thesis Support</div>
+          <h3>Machine Learning in Healthcare Diagnostics</h3>
+          <p>Research proposal, literature review, and methodology chapters for a Computer Science MSc thesis.</p>
+          <div class="portfolio-meta">
+            <span class="pm-item">12,000 words</span>
+            <span class="pm-item">•</span>
+            <span class="pm-item">MSc level</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="why">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Why Academy</div>
+      <h2>The Difference Is in the <span class="gold-text">Details</span></h2>
+      <p>What sets us apart from generic writing services — built around the real needs of students.</p>
+    </div>
+    <div class="why-grid stagger">
+      <div class="why-card">
+        <div class="why-icon">🧑‍🎓</div>
+        <h3>Expert Writers</h3>
+        <p>Every project is handled by subject-matter specialists who hold advanced degrees in the relevant field.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔐</div>
+        <h3>Confidential Service</h3>
+        <p>Absolute privacy guaranteed. Your name, your institution, your project — never shared, ever.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💎</div>
+        <h3>Affordable Pricing</h3>
+        <p>Transparent, student-friendly pricing with no hidden fees. Premium support that doesn't break the budget.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">⚡</div>
+        <h3>Fast Response</h3>
+        <p>Get in touch via WhatsApp and hear back within minutes. Urgent deadlines are our specialty.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🎯</div>
+        <h3>Quality Assurance</h3>
+        <p>Rigorous internal review before delivery. Grammar checks, plagiarism screening, formatting review — every time.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">❤️</div>
+        <h3>Student Satisfaction</h3>
+        <p>Hundreds of satisfied students across Africa and beyond — with free revisions until you're happy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Student Reviews</div>
+      <h2>Heard From the <span class="gold-text">Students We Support</span></h2>
+      <p>Real words from real students who trusted Academy with their academic journey.</p>
+    </div>
+    <div class="testimonials-wrapper fade-in">
+      <div class="testimonials-track-outer">
+        <div class="testimonials-track" id="testimonialsTrack">
+          <div class="testimonial-card">
+            <div class="t-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="t-text">"Academy delivered my research paper ahead of schedule and the quality was outstanding. My supervisor was genuinely impressed. I've used them three times now and they never disappoint."</p>
+            <div class="t-author">
+              <div class="t-avatar" style="background:var(--gold-dim);">👩🏽</div>
+              <div><div class="t-name">Amara O.</div><div class="t-country">🇳🇬 Nigeria — MSc Economics</div></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="t-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="t-text">"I was struggling with my dissertation literature review and Academy completely transformed it. The writing was scholarly, well-structured, and referenced exactly as my university requires."</p>
+            <div class="t-author">
+              <div class="t-avatar" style="background:rgba(80,100,200,0.15);">👨🏿</div>
+              <div><div class="t-name">Kofi M.</div><div class="t-country">🇬🇭 Ghana — MBA Student</div></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="t-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="t-text">"Fast, professional, and discreet. Got my essay edited and it came back completely polished. The proofreading alone caught errors I'd completely missed. Absolutely recommend Academy."</p>
+            <div class="t-author">
+              <div class="t-avatar" style="background:rgba(233,62,130,0.12);">👩🏾</div>
+              <div><div class="t-name">Nadia T.</div><div class="t-country">🇰🇪 Kenya — BA Literature</div></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="t-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="t-text">"I handed over a messy draft of my thesis introduction and received back a beautifully written, academically rigorous chapter. The turnaround was quicker than I expected. 10/10."</p>
+            <div class="t-author">
+              <div class="t-avatar" style="background:rgba(37,211,102,0.1);">👨🏽</div>
+              <div><div class="t-name">Emmanuel K.</div><div class="t-country">🇿🇦 South Africa — PhD Candidate</div></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="t-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="t-text">"Contacted them at 11pm with a 48-hour deadline and they delivered a detailed case study with sources, analysis, everything. I was blown away. Academy is now my go-to academic support."</p>
+            <div class="t-author">
+              <div class="t-avatar" style="background:rgba(201,168,76,0.12);">👩🏼</div>
+              <div><div class="t-name">Priya S.</div><div class="t-country">🇮🇳 India — MSc Management</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slider-controls">
+        <button class="slider-btn" id="prevBtn">&#8592;</button>
+        <div class="slider-dots" id="sliderDots"></div>
+        <button class="slider-btn" id="nextBtn">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATISTICS -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-inner fade-up">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number" data-target="500">0</div>
+          <div class="stat-label">Projects Completed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="300">0</div>
+          <div class="stat-label">Happy Clients</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="25">0</div>
+          <div class="stat-label">Expert Writers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="98">0</div>
+          <div class="stat-label">Client Satisfaction %</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Get in Touch</div>
+      <h2>Ready to <span class="gold-text">Start Your Project?</span></h2>
+      <p>Reach out through any channel below. We respond fast — most enquiries answered within minutes.</p>
+    </div>
+    <div class="contact-grid stagger">
+      <a href="https://wa.me/254748738808" target="_blank" rel="noopener" class="contact-card">
+        <div class="cc-icon cc-wa">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <h3>WhatsApp</h3>
+        <p>+254 748 738 808</p>
+      </a>
+      <a href="mailto:contact@academy.com" class="contact-card">
+        <div class="cc-icon cc-em">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <h3>Email</h3>
+        <p>contact@academy.com</p>
+      </a>
+      <a href="https://instagram.com/academy" target="_blank" rel="noopener" class="contact-card">
+        <div class="cc-icon cc-ig">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e93e82" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+        <h3>Instagram</h3>
+        <p>@academy</p>
+      </a>
+      <a href="https://facebook.com/academy" target="_blank" rel="noopener" class="contact-card">
+        <div class="cc-icon cc-fb">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </div>
+        <h3>Facebook</h3>
+        <p>Academy</p>
+      </a>
+    </div>
+    <div class="contact-cta fade-up">
+      <h2>Start Your Project <span class="gold-text">Today</span></h2>
+      <p>Join hundreds of students who have trusted Academy to support their academic journey. One message is all it takes.</p>
+      <a href="https://wa.me/254748738808?text=Hello%20Academy!%20I'd%20like%20to%20discuss%20academic%20writing%20support%20for%20my%20project." target="_blank" rel="noopener" class="btn btn-wa">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Message Us on WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">Academy</div>
+        <p>Professional academic writing support trusted by students across Africa and beyond. Expert writers. Complete confidentiality. Outstanding results.</p>
+        <div class="footer-social">
+          <a href="https://wa.me/254748738808" target="_blank" rel="noopener" class="social-btn" aria-label="WhatsApp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://instagram.com/academy" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://facebook.com/academy" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="mailto:contact@academy.com" class="social-btn" aria-label="Email">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Essay Writing</a></li>
+          <li><a href="#services">Research Papers</a></li>
+          <li><a href="#services">Dissertation Support</a></li>
+          <li><a href="#services">Thesis Writing</a></li>
+          <li><a href="#services">Editing & Proofreading</a></li>
+          <li><a href="#services">Case Studies</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/254748738808" target="_blank" rel="noopener">+254 748 738 808</a></li>
+          <li><a href="mailto:contact@academy.com">contact@academy.com</a></li>
+          <li><a href="https://instagram.com/academy" target="_blank" rel="noopener">@academy</a></li>
+          <li><a href="https://facebook.com/academy" target="_blank" rel="noopener">Academy on Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p style="color:var(--text-dim)">© 2025 Academy. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+const themeToggle = document.getElementById('themeToggle');
+const html = document.documentElement;
+
+function setTheme(theme) {
+  html.setAttribute('data-theme', theme);
+  themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('academy-theme', theme);
+}
+
+themeToggle.addEventListener('click', () => {
+  setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+// Restore saved
+const saved = localStorage.getItem('academy-theme');
+if (saved) setTheme(saved);
+
+/* ============================================================
+   NAVBAR SCROLL
+   ============================================================ */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+/* ============================================================
+   HAMBURGER
+   ============================================================ */
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open');
+});
+
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+  });
+});
+
+/* ============================================================
+   SCROLL ANIMATIONS
+   ============================================================ */
+const animEls = document.querySelectorAll('.fade-up, .fade-in, .stagger');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+animEls.forEach(el => io.observe(el));
+
+/* Trigger hero animations immediately */
+document.querySelectorAll('#hero .fade-up, #hero .fade-in').forEach((el, i) => {
+  setTimeout(() => el.classList.add('visible'), i * 120);
+});
+
+/* ============================================================
+   ANIMATED COUNTERS
+   ============================================================ */
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const isPercent = el.parentElement.querySelector('.stat-label').textContent.includes('%');
+  const suffix = isPercent ? '%' : '+';
+  const duration = 1800;
+  const step = 16;
+  const increment = target / (duration / step);
+  let current = 0;
+
+  const timer = setInterval(() => {
+    current = Math.min(current + increment, target);
+    el.textContent = Math.floor(current) + suffix;
+    if (current >= target) clearInterval(timer);
+  }, step);
+}
+
+const statsObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.stat-number[data-target]').forEach(animateCounter);
+      statsObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+const statsSection = document.getElementById('stats');
+if (statsSection) statsObs.observe(statsSection);
+
+/* ============================================================
+   TESTIMONIALS SLIDER
+   ============================================================ */
+const track = document.getElementById('testimonialsTrack');
+const cards = track.querySelectorAll('.testimonial-card');
+const dotsContainer = document.getElementById('sliderDots');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+let current = 0;
+let perView = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 600 ? 2 : 1;
+const total = cards.length;
+const maxIdx = total - perView;
+
+// Create dots
+for (let i = 0; i <= maxIdx; i++) {
+  const dot = document.createElement('button');
+  dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+  dot.setAttribute('aria-label', `Slide ${i + 1}`);
+  dot.addEventListener('click', () => goTo(i));
+  dotsContainer.appendChild(dot);
+}
+
+function updateDots() {
+  dotsContainer.querySelectorAll('.slider-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === current);
+  });
+  cards.forEach((c, i) => c.classList.toggle('active', i === current));
+}
+
+function goTo(idx) {
+  current = Math.max(0, Math.min(idx, maxIdx));
+  const cardWidth = cards[0].offsetWidth + 24;
+  track.style.transform = `translateX(-${current * cardWidth}px)`;
+  updateDots();
+}
+
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+
+// Auto-slide
+let autoSlide = setInterval(() => goTo(current >= maxIdx ? 0 : current + 1), 5000);
+track.closest('.testimonials-wrapper').addEventListener('mouseenter', () => clearInterval(autoSlide));
+track.closest('.testimonials-wrapper').addEventListener('mouseleave', () => {
+  autoSlide = setInterval(() => goTo(current >= maxIdx ? 0 : current + 1), 5000);
+});
+
+// Responsive recalc
+window.addEventListener('resize', () => {
+  perView = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 600 ? 2 : 1;
+  goTo(0);
+});
+
+/* ============================================================
+   PORTFOLIO FILTER
+   ============================================================ */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.portfolio-card').forEach(card => {
+      const show = filter === 'all' || card.dataset.cat === filter;
+      card.style.opacity = show ? '1' : '0.25';
+      card.style.transform = show ? '' : 'scale(0.96)';
+      card.style.pointerEvents = show ? '' : 'none';
+    });
+  });
+});
+
+/* ============================================================
+   SMOOTH ACTIVE NAV
+   ============================================================ */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + e.target.id ? 'var(--gold-light)' : '';
+      });
+    }
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(s => navObs.observe(s));
+
+/* ============================================================
+   PARALLAX (subtle)
+   ============================================================ */
+const orbs = document.querySelectorAll('.orb');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  orbs.forEach((orb, i) => {
+    orb.style.transform = `translateY(${y * (i % 2 === 0 ? 0.06 : -0.04)}px)`;
+  });
+}, { passive: true });
+</script>
+</body>
+</html>
